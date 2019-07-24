@@ -1,16 +1,32 @@
-import os, tkinter, tkinter.filedialog, tkinter.messagebox
+import tkinter as tk
 
-root = tkinter.Tk()
-root.withdraw()
+class Demo1:
+    def __init__(self, master):
+        self.master = master
+        self.frame = tk.Frame(self.master)
+        self.button1 = tk.Button(self.frame, text = 'New Window', width = 25, command = self.new_window)
+        self.button1.pack()
+        self.frame.pack()
 
-# 選択候補を拡張子jpgに絞る（絞らない場合は *.jpg → *）
-filetype = [("", "*.jpg")]
+    def new_window(self):
+        self.newWindow = tk.Toplevel(self.master)
+        self.app = Demo2(self.newWindow)
 
-dirpath = os.path.abspath(os.path.dirname(__file__))
-tkinter.messagebox.showinfo('テスト', 'ファイルを選択してください')
+class Demo2:
+    def __init__(self, master):
+        self.master = master
+        self.frame = tk.Frame(self.master)
+        self.quitButton = tk.Button(self.frame, text = 'Quit', width = 25, command = self.close_windows)
+        self.quitButton.pack()
+        self.frame.pack()
 
-# 選択したファイルのパスを取得
-filepath = tkinter.filedialog.askopenfilename(filetypes = filetype, initialdir = dirpath)
+    def close_windows(self):
+        self.master.destroy()
 
-# 選択したファイル名を表示
-tkinter.messagebox.showinfo('テスト', filepath)
+def main(): 
+    root = tk.Tk()
+    app = Demo1(root)
+    root.mainloop()
+
+if __name__ == '__main__':
+    main()
